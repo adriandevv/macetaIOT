@@ -38,10 +38,10 @@ const MacetaSchema = {
   },
 };
 
-class maceta extends Model {
+class Maceta extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user' });
-    this.hasOne(models.planta, {
+    this.hasOne(models.Planta, {
         as: 'planta',
         foreignKey: 'macetaId'
       });
@@ -57,4 +57,4 @@ class maceta extends Model {
   }
 }
 
-module.exports = { MACETA_TABLE, MacetaSchema, maceta };
+module.exports = { MACETA_TABLE, MacetaSchema, Maceta };
