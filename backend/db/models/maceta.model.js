@@ -1,7 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-
+const { PLANTA_TABLE } = require('./planta.model')
 const MACETA_TABLE = 'maceta';
-const {USER_TABLE} = require("./user.model")
+const { USER_TABLE } = require("./user.model")
 const MacetaSchema = {
   id: {
     allowNull: false,
@@ -17,6 +17,32 @@ const MacetaSchema = {
   password: {
     allowNull: false,
     type: DataTypes.STRING,
+  },
+  humedadTierra: {
+    field: 'humedad_tierra',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  temperaturaAmbiente: {
+    field: 'temperatura_ambiente',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  humedadAmbiente: {
+    field: 'humedad_ambiente',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  plantaId: {
+    field: 'planta_id',
+    type: DataTypes.INTEGER,
+    unique: true,
+    references: {
+      model: PLANTA_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
   },
   userId: {
     field: 'user_id',
@@ -41,10 +67,7 @@ const MacetaSchema = {
 class Maceta extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user' });
-    this.hasOne(models.Planta, {
-        as: 'planta',
-        foreignKey: 'macetaId'
-      });
+    this.belongsTo(models.Planta, { as: 'planta' });
   }
 
   static config(sequelize) {

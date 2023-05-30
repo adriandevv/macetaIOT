@@ -4,12 +4,12 @@ const { Planta, PlantaSchema } = require('./planta.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
-  Maceta.init(MacetaSchema, Maceta.config(sequelize));
   Planta.init(PlantaSchema, Planta.config(sequelize));
+  Maceta.init(MacetaSchema, Maceta.config(sequelize));
 
   User.associate(sequelize.models);
-  Maceta.associate(sequelize.models);
   Planta.associate(sequelize.models);
+  Maceta.associate(sequelize.models);
 }
 
 module.exports = setupModels;

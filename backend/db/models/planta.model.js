@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-const {MACETA_TABLE} = require("./maceta.model")
+
 const PLANTA_TABLE = 'planta';
 
 const PlantaSchema = {
@@ -9,34 +9,36 @@ const PlantaSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  nombre: {
-    allowNull: false,
+  name: {
     type: DataTypes.STRING,
-    unique: true,
   },
-  humedadTierra: {
-    allowNull: false,
-    field: 'humedad_tierra',
+  codigo: {
+    type: DataTypes.STRING,
+  },
+  minHumedadTierra: {
+    field: 'minimo_humedad_tierra',
     type: DataTypes.INTEGER,
   },
-  humedadAmbiente: {
-    allowNull: false,
-    field: 'humedad_ambiente',
+  maxHumedadTierra: {
+    field: 'maximo_humedad_tierra',
     type: DataTypes.INTEGER,
   },
-  macetaId: {
-    field: 'maceta_id',
-    allowNull: false,
+  minTemperaturaAmbiente: {
+    field: 'minimo_Temperatura_ambiente',
     type: DataTypes.INTEGER,
-    unique: true,
-    references: {
-      model: MACETA_TABLE,
-      key: 'id',
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  }
-  ,
+  },
+  maxTemperaturaAmbiente: {
+    field: 'maximo_temperatura_ambiente',
+    type: DataTypes.INTEGER,
+  },
+  minHumedadAmbiente: {
+    field: 'minimo_humedad_ambiente',
+    type: DataTypes.INTEGER,
+  },
+  maxHumedadAmbiente: {
+    field: 'maximo_temperatura_ambiente',
+    type: DataTypes.INTEGER,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -47,7 +49,10 @@ const PlantaSchema = {
 
 class Planta extends Model {
   static associate(models) {
-    this.belongsTo(models.Maceta, { as: 'maceta' });
+    this.hasOne(models.Maceta, {
+      as: 'maceta',
+      foreignKey: 'plantaId'
+    });
   }
 
   static config(sequelize) {
